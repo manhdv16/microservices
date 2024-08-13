@@ -1,0 +1,20 @@
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+server:
+  port: 8761
+spring:
+  application:
+    name: MY-EUREKA-SERVER
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: userModule
+#          uri: http://localhost:9090/
+#          predicates:
+#            - Path=/user/**
+#        - id: employeeModule
+#          uri: http://localhost:9091/
+#          predicates:
+#            - Path=/employee/**
