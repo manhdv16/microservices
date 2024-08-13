@@ -2,11 +2,10 @@ package com.dvm.identityservice.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Set;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,11 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Role {
+public class InvalidatedToken {
     @Id
-    String name;
-    String description;
-
-    @ManyToMany
-    Set<Permission> permissions;
+    String id;
+    Date expiryTime;
 }
