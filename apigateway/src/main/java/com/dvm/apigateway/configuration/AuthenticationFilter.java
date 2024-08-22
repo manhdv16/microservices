@@ -1,6 +1,7 @@
 package com.dvm.apigateway.configuration;
 
 import com.dvm.apigateway.dto.response.ApiResponse;
+import com.dvm.apigateway.dto.response.IntrospectResponse;
 import com.dvm.apigateway.service.IdentityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

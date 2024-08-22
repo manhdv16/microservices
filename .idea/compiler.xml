@@ -10,6 +10,7 @@
         <module name="springcloudgateway" />
         <module name="servicedemo1" />
         <module name="identity-service" />
+        <module name="profile" />
       </profile>
     </annotationProcessing>
   </component>
@@ -17,6 +18,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="apigateway" options="-parameters" />
       <module name="identity-service" options="-parameters" />
+      <module name="profile" options="-parameters" />
       <module name="servicedemo1" options="-parameters" />
       <module name="springcloudgateway" options="-parameters" />
     </option>

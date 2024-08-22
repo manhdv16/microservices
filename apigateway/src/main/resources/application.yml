@@ -1,6 +1,7 @@
 server:
   port: 9999
-
+app:
+  api-prefix: /api/v1
 eureka:
   client:
     service-url:
@@ -18,8 +19,12 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user/**
+            - Path=${app.api-prefix}/profile/users/**
+          filters:
+            - StripPrefix=2
         - id: identity-service
           uri: lb://IDENTITY-SERVICE
           predicates:
-            - Path=/auth/**
+            - Path=${app.api-prefix}/identity/**
+          filters:
+            - StripPrefix=2

@@ -46,11 +46,11 @@ public class AuthenticationService {
 
     @NonFinal
 //    @Value("${jwt.valid-duration}")
-    protected long VALID_DURATION=3600;
+    protected long VALID_DURATION=360000000;
 
     @NonFinal
 //    @Value("${jwt.refreshable-duration}")
-    protected long REFRESHABLE_DURATION=36000;
+    protected long REFRESHABLE_DURATION=36000000;
 
     public IntrospectResponse introspect(IntrospectRequest request)  {
         var token = request.getToken();
