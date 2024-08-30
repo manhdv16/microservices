@@ -1,17 +1,17 @@
 package com.dvm.identityservice.dto.response;
 
-import java.util.Set;
-
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Set;
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserResponse {
-    String id;
-    String username;
-    Set<RoleResponse> roles;
+public class RoleResponse {
+    String name;
+    String description;
+    Set<PermissionResponse> permissions;
 }

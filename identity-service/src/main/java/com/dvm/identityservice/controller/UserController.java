@@ -8,10 +8,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -24,6 +21,19 @@ public class UserController {
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.createUser(request))
+                .build();
+    }
+    @GetMapping("/{userId}")
+    ApiResponse<UserResponse> getUserById(@PathVariable String userId) {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.getUserById(userId))
+                .build();
+    }
+    @DeleteMapping("/{userId}")
+    ApiResponse<String> delete(@PathVariable String userId) {
+        userService.delete(userId);
+        return ApiResponse.<String>builder()
+                .result("Deleted user with id: " + userId)
                 .build();
     }
 }

@@ -11,7 +11,9 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.catalina.User;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +22,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserProfileService {
+
     UserProfileRepository userProfileRepository;
     DepartmentRepository departmentRepository;
     ModelMapper modelMapper;
+
     public UserProfileResponse createProfile(ProfileCreationRequest request) {
 //        Department department = departmentRepository.findById(request.getDepartmentId()).orElseThrow(()-> new RuntimeException("Department not found"));
 
@@ -35,41 +39,26 @@ public class UserProfileService {
     }
     public UserProfileResponse updateProfile(String profileId,ProfileUpdateRequest request) {
         UserProfile userProfile = userProfileRepository.findById(profileId).orElseThrow(() -> new RuntimeException("Profile not found"));
-        if(request.getFirstName() != null) userProfile.setFirstName(request.getFirstName());
-        if(request.getLastName() != null)userProfile.setLastName(request.getLastName());
-        if(request.getDob() != null)userProfile.setDob(request.getDob());
-        if(request.getCity() != null)userProfile.setCity(request.getCity());
+
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+        modelMapper.map(request, userProfile);
+
         userProfile = userProfileRepository.save(userProfile);
-        return UserProfileResponse.builder()
-                .id(userProfile.getId())
-                .firstName(userProfile.getFirstName())
-                .lastName(userProfile.getLastName())
-                .dob(userProfile.getDob())
-                .city(userProfile.getCity())
-                .build();
+        return modelMapper.map(userProfile,UserProfileResponse.class);
     }
 
     public UserProfileResponse getProfile(String id) {
         UserProfile userProfile = userProfileRepository.findById(id).orElseThrow(() -> new RuntimeException("Profile not found"));
-//        return userProfileMapper.toUserProfileReponse(userProfile);
-        return UserProfileResponse.builder()
-                .id(userProfile.getId())
-                .firstName(userProfile.getFirstName())
-                .lastName(userProfile.getLastName())
-                .dob(userProfile.getDob())
-                .city(userProfile.getCity())
-                .build();
+        return modelMapper.map(userProfile, UserProfileResponse.class);
     }
+
+//    @PreAuthorize("hasRole('ADMIN')")
     public List<UserProfileResponse> getAllProfiles() {
         List<UserProfile> userProfiles = userProfileRepository.findAll();
-        return userProfiles.stream().map(userProfile-> UserProfileResponse.builder()
-                .id(userProfile.getId())
-                .firstName(userProfile.getFirstName())
-                .lastName(userProfile.getLastName())
-                .dob(userProfile.getDob())
-                .city(userProfile.getCity())
-                .build()).toList();
+        return userProfiles.stream().map(userProfile->
+                modelMapper.map(userProfile, UserProfileResponse.class)).toList();
     }
+
     public void deleteProfile(String id) {
         userProfileRepository.deleteById(id);
     }

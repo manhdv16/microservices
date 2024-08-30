@@ -13,6 +13,7 @@ import com.dvm.identityservice.repository.httpclient.ProfileClient;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,8 +43,16 @@ public class UserService {
         profileCreationRequest.setUserId(user.getId());
 
         UserProfileResponse profile = profileClient.createProfile(profileCreationRequest).getResult();
-        UserResponse response = modelMapper.map(profile, UserResponse.class);
-        return response;
+        return modelMapper.map(profile, UserResponse.class);
     }
 
+    public UserResponse getUserById(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        return modelMapper.map(user, UserResponse.class);
+    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void delete(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        userRepository.delete(user);
+    }
 }

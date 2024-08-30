@@ -16,8 +16,8 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
-          uri: lb://USER-SERVICE
+        - id: profile-service
+          uri: lb://PROFILE-SERVICE
           predicates:
             - Path=${app.api-prefix}/profile/users/**
           filters:

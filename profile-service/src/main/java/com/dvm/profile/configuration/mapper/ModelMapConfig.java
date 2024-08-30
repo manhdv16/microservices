@@ -1,4 +1,4 @@
-package com.dvm.profile.configuration;
+package com.dvm.profile.configuration.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
