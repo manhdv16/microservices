@@ -1,10 +1,10 @@
-package com.dvm.servicedemo1;
+package com.dvm.notification;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Servicedemo1ApplicationTests {
+class NotificationServiceApplicationTests {
 
     @Test
     void contextLoads() {

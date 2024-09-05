@@ -1,15 +1,17 @@
-package com.dvm.servicedemo1;
+package com.dvm.notification;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class Servicedemo1Application {
+@EnableFeignClients
+public class NotificationServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Servicedemo1Application.class, args);
+        SpringApplication.run(NotificationServiceApplication.class, args);
     }
 
 }
