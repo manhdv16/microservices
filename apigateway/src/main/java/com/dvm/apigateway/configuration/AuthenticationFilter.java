@@ -1,7 +1,6 @@
 package com.dvm.apigateway.configuration;
 
 import com.dvm.apigateway.dto.response.ApiResponse;
-import com.dvm.apigateway.dto.response.IntrospectResponse;
 import com.dvm.apigateway.service.IdentityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -42,9 +42,9 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
             "/notification/email/send"
     };
 
-//    @Value("${app.api-prefix}")
+    @Value("${app.api-prefix}")
     @NonFinal
-    private String apiPrefix="/api/v1";
+    private String apiPrefix;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

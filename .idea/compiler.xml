@@ -7,17 +7,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="apigateway" />
+        <module name="notification" />
         <module name="springcloudgateway" />
-        <module name="servicedemo1" />
         <module name="identity-service" />
         <module name="profile" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="servicedemo1" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="apigateway" options="-parameters" />
       <module name="identity-service" options="-parameters" />
+      <module name="notification" options="-parameters" />
       <module name="profile" options="-parameters" />
       <module name="servicedemo1" options="-parameters" />
       <module name="springcloudgateway" options="-parameters" />

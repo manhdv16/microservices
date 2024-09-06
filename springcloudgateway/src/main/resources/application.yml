@@ -7,14 +7,3 @@ server:
 spring:
   application:
     name: MY-EUREKA-SERVER
-#  cloud:
-#    gateway:
-#      routes:
-#        - id: userModule
-#          uri: http://localhost:9090/
-#          predicates:
-#            - Path=/user/**
-#        - id: employeeModule
-#          uri: http://localhost:9091/
-#          predicates:
-#            - Path=/employee/**
