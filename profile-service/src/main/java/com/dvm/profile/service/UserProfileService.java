@@ -36,14 +36,14 @@ public class UserProfileService {
         UserProfile userProfile = modelMapper.map(request, UserProfile.class);
 //        userProfile.setDepartment(department);
 
-//        userProfileRepository.save(userProfile);
+        userProfileRepository.save(userProfile);
         NotificationEvent event = NotificationEvent.builder()
                 .body("Welcome to the system")
                 .subject("User created")
                 .recipient(userProfile.getEmail())
                 .build();
-        // send to kafka
-        kafkaTemplate.send("notification-create-user", event);
+//         send to kafka
+//        kafkaTemplate.send("notification-create-user", event);
         return modelMapper.map(userProfile, UserProfileResponse.class);
 //        response.setDepartmentName(department.getName());
     }
@@ -62,7 +62,7 @@ public class UserProfileService {
         return modelMapper.map(userProfile, UserProfileResponse.class);
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<UserProfileResponse> getAllProfiles() {
         List<UserProfile> userProfiles = userProfileRepository.findAll();
         return userProfiles.stream().map(userProfile->
