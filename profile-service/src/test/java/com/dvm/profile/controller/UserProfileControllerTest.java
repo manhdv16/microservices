@@ -15,10 +15,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import java.time.LocalDate;
 
 @Slf4j
@@ -35,10 +35,9 @@ public class UserProfileControllerTest {
     private UserProfileResponse response;
     private ProfileCreationRequest request;
 
-    private LocalDate dob = LocalDate.of(1990, 1, 1);
-
     @BeforeEach
     void initData() {
+        LocalDate dob = LocalDate.of(1990, 1, 1);
         request = ProfileCreationRequest.builder()
                 .userId("1")
                 .firstName("John")
@@ -55,6 +54,7 @@ public class UserProfileControllerTest {
                 .build();
     }
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void createProfile() throws Exception{
     // GIVEN
         ObjectMapper objectMapper = new ObjectMapper();
@@ -65,7 +65,7 @@ public class UserProfileControllerTest {
                 .thenReturn(response);
     // WHEN
         mockMvc.perform(MockMvcRequestBuilders
-                .post("/api/v1/users")
+                .post("/users")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(content))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -76,6 +76,7 @@ public class UserProfileControllerTest {
 
     }
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void createProfileWithUserNameInvalidFail() throws Exception {
         // GIVEN
         request.setFirstName("Joh");
@@ -85,7 +86,7 @@ public class UserProfileControllerTest {
 
         // WHEN THEN
         mockMvc.perform(MockMvcRequestBuilders
-                .post("/api/v1/users")
+                .post("/users")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(content))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())

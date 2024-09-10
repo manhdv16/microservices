@@ -52,5 +52,16 @@ public class GlobalExceptionHandler {
                         .message(errorCode.getMessage())
                         .build());
     }
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    ResponseEntity<ApiResponse> handlingMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+        String errorMessage = exception.getFieldError().getDefaultMessage();
+        log.info(errorMessage);
+        ErrorCode errorCode = ErrorCode.findByDisplayName(errorMessage);
+
+        return ResponseEntity.badRequest().body(ApiResponse.builder()
+                .code(errorCode.getCode())
+                .message(errorCode.getMessage())
+                .build());
+    }
 }
 

@@ -14,6 +14,7 @@ public enum ErrorCode {
     USER_NOT_EXISTED(1005, "User not existed", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
+    EMAIL_INVALID(1008, "Email is invalid", HttpStatus.BAD_REQUEST),
     ;
     ;
 

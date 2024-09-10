@@ -5,9 +5,11 @@ import com.dvm.profile.dto.request.ProfileUpdateRequest;
 import com.dvm.profile.dto.response.ApiResponse;
 import com.dvm.profile.dto.response.UserProfileResponse;
 import com.dvm.profile.service.UserProfileService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,8 @@ public class UserProfileController {
     UserProfileService userProfileService;
 
     @PostMapping
-    ApiResponse<UserProfileResponse> createProfile(@RequestBody ProfileCreationRequest request) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    ApiResponse<UserProfileResponse> createProfile(@RequestBody @Valid ProfileCreationRequest request) {
         return ApiResponse.<UserProfileResponse>builder()
                 .result(userProfileService.createProfile(request))
                 .build();

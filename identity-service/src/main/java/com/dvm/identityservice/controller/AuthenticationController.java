@@ -9,6 +9,7 @@ import com.dvm.identityservice.dto.response.AuthenticationResponse;
 import com.dvm.identityservice.dto.response.IntrospectResponse;
 import com.dvm.identityservice.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,7 +28,7 @@ public class AuthenticationController {
     AuthenticationService authenticationService;
 
     @PostMapping("/token")
-    ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    ApiResponse<AuthenticationResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) {
         var result = authenticationService.authenticate(request);
         return ApiResponse.<AuthenticationResponse>builder().result(result).build();
     }

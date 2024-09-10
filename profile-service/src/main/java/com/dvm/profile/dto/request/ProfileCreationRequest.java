@@ -1,5 +1,9 @@
 package com.dvm.profile.dto.request;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,6 +18,8 @@ public class ProfileCreationRequest {
     String userId;
     String firstName;
     String lastName;
+
+    @Email(message = "EMAIL_INVALID")
     String email;
     LocalDate dob;
     String city;

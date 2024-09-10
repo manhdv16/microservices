@@ -15,6 +15,7 @@ public enum ErrorCode {
     UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
     INVALID_DOB(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
+    INVALID_EMAIL(1009, "Invalid email", HttpStatus.BAD_REQUEST),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
@@ -26,5 +27,12 @@ public enum ErrorCode {
     private final int code;
     private final String message;
     private final HttpStatusCode statusCode;
+
+    public static ErrorCode findByDisplayName(String errorMessage) {
+        for(ErrorCode errorCode : ErrorCode.values()) {
+            if(errorCode.toString().equals(errorMessage)) return errorCode;
+        }
+        return UNCATEGORIZED_EXCEPTION;
+    }
 }
 
