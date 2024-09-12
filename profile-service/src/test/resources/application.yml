@@ -1,5 +1,0 @@
-eureka:
-  client:
-    enabled: false
-server:
-  port: 0

@@ -36,7 +36,7 @@ public class UserProfileService {
         UserProfile userProfile = modelMapper.map(request, UserProfile.class);
 //        userProfile.setDepartment(department);
 
-        userProfileRepository.save(userProfile);
+        UserProfile userProfile1 = userProfileRepository.save(userProfile);
         NotificationEvent event = NotificationEvent.builder()
                 .body("Welcome to the system")
                 .subject("User created")

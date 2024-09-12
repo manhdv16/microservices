@@ -1,5 +1,6 @@
 package com.dvm.identityservice.dto.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -20,6 +21,7 @@ public class UserCreationRequest {
 
     String firstName;
     String lastName;
+    @Email(message = "INVALID_EMAIL")
     String email;
     LocalDate dob;
     String city;

@@ -23,13 +23,13 @@ import java.time.LocalDate;
 
 @Slf4j
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc // tao mock request cho controller test
 public class UserProfileControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockBean // tao mock cho service
     private UserProfileService userProfileService;
 
     private UserProfileResponse response;
@@ -42,6 +42,7 @@ public class UserProfileControllerTest {
                 .userId("1")
                 .firstName("John")
                 .lastName("Doe")
+                .email("manh11yopmail.com")
                 .dob(dob)
                 .city("New York")
                 .build();
@@ -50,20 +51,21 @@ public class UserProfileControllerTest {
                 .firstName("John")
                 .lastName("Doe")
                 .dob(dob)
+                .email("manh11yopmail.com")
                 .city("New York")
                 .build();
     }
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void createProfile() throws Exception{
+    void createProfile_validRequest_success() throws Exception{
     // GIVEN
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        String content = objectMapper.writeValueAsString(request);
+        ObjectMapper objectMapper = new ObjectMapper(); // dung de chuyen doi object thanh json
+        objectMapper.registerModule(new JavaTimeModule());// dung de xu ly LocalDate
+        String content = objectMapper.writeValueAsString(request); // chuyen doi object thanh json
 
         Mockito.when(userProfileService.createProfile(ArgumentMatchers.any()))
-                .thenReturn(response);
-    // WHEN
+                .thenReturn(response); // mock service tra ve response khi goi createProfile
+    // WHEN, THEN
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/users")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -71,15 +73,14 @@ public class UserProfileControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value(1000)
                 )
-        ;
-    // THEN
+        ; // kiem tra response tra ve khi goi api /users
 
     }
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void createProfileWithUserNameInvalidFail() throws Exception {
+    void createProfile_withEmailInvalidFail() throws Exception {
         // GIVEN
-        request.setFirstName("Joh");
+        request.setEmail("invalid-email");
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         String content = objectMapper.writeValueAsString(request);
@@ -90,7 +91,7 @@ public class UserProfileControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(content))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("code").value(1001)
+                .andExpect(MockMvcResultMatchers.jsonPath("code").value(1008)
         );
     }
 }

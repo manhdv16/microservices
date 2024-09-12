@@ -27,4 +27,11 @@ public enum ErrorCode {
     private final int code;
     private final String message;
     private final HttpStatus httpStatus;
+
+    public static ErrorCode findByDisplayName(String errorMessage) {
+        for(ErrorCode errorCode : ErrorCode.values()) {
+            if(errorCode.toString().equals(errorMessage)) return errorCode;
+        }
+        return UNCATEGORIZED_EXCEPTION;
+    }
 }

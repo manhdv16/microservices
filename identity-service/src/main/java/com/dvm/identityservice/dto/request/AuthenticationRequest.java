@@ -11,9 +11,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticationRequest {
-    @Email(message = "INVALID_EMAIL")
     String username;
-    @Size(min = 6, message = "INVALID_PASSWORD")
     String password;
 }
 
